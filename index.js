@@ -33,7 +33,7 @@ initVol();
 function makeBall(volume) {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, 2 * Math.PI);
-  if (volume > 0.003) {
+  if (volume > 2) {
     ctx.fillStyle = "#b1dec8";
     // ctx.fillStyle = "rgba(255, 255, 255, 0.0)";
   } else {
@@ -77,7 +77,6 @@ function drawPaddleRight() {
 
 function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  makeBall();
   drawPaddleLeft();
   drawPaddleRight();
   // keySelector();
@@ -141,6 +140,7 @@ check = 1;
 function voiceSelector() {
   let vol = mic.getLevel();
   let delta = (vol - baseVol) * 100;
+  makeBall(delta);
 
   console.log(delta);
   if (delta >= 2) {
@@ -149,6 +149,15 @@ function voiceSelector() {
   } else if (delta < 1.5) {
     console.log("UP");
     paddleLeftY -= 5;
+  }
+
+  if (keys[38]) {
+    //up for rightpaddle
+    paddleRightY -= 5;
+  }
+  if (keys[40]) {
+    //down for rightpaddle
+    paddleRightY += 5;
   }
 
   if (paddleLeftY < 0) {
