@@ -24,220 +24,216 @@ var baseVol;
 var mic;
 
 function initVol() {
-	mic = new p5.AudioIn();
-	mic.start();
-	baseVol = mic.getLevel();
+  mic = new p5.AudioIn();
+  mic.start();
+  baseVol = mic.getLevel();
 }
 initVol();
 
-function makeBall() {
-	ctx.beginPath();
-	ctx.arc(x, y, ballRadius, 0, 2 * Math.PI);
-	ctx.fillStyle = "rebeccapurple";
-	ctx.fill();
-	ctx.closePath();
+function makeBall(volume) {
+  ctx.beginPath();
+  ctx.arc(x, y, ballRadius, 0, 2 * Math.PI);
+  if (volume > 0.003) {
+    ctx.fillStyle = "#b1dec8";
+    // ctx.fillStyle = "rgba(255, 255, 255, 0.0)";
+  } else {
+    ctx.fillStyle = "rebeccapurple";
+  }
+  ctx.fill();
+  ctx.closePath();
 }
+
 function makeScoreLeft() {
-	ctx.beginPath();
-	ctx.fillStyle = "rebeccapurple";
-	ctx.font = "20px Arial";
-	ctx.fillText(" Player - A :" + " " + scoreLeft, 10, 30);
-	ctx.fill();
-	ctx.closePath();
+  ctx.beginPath();
+  ctx.fillStyle = "rebeccapurple";
+  ctx.font = "20px Arial";
+  ctx.fillText(" Player - A :" + " " + scoreLeft, 10, 30);
+  ctx.fill();
+  ctx.closePath();
 }
 
 function makeScoreRight() {
-	ctx.beginPath();
-	ctx.fillStyle = "rebeccapurple";
-	ctx.font = "20px Arial";
-	ctx.fillText("Player - B :" + " " + scoreRight, window.innerWidth - 150, 30);
-	ctx.fill();
-	ctx.closePath();
+  ctx.beginPath();
+  ctx.fillStyle = "rebeccapurple";
+  ctx.font = "20px Arial";
+  ctx.fillText("Player - B :" + " " + scoreRight, window.innerWidth - 150, 30);
+  ctx.fill();
+  ctx.closePath();
 }
 function drawPaddleLeft() {
-	ctx.beginPath();
-	ctx.fillRect(paddleLeftX, paddleLeftY, paddleLeftWidth, paddleLeftHeight);
-	ctx.fillStyle = "rebeccapurple";
-	ctx.fill();
-	ctx.closePath();
+  ctx.beginPath();
+  ctx.fillRect(paddleLeftX, paddleLeftY, paddleLeftWidth, paddleLeftHeight);
+  ctx.fillStyle = "rebeccapurple";
+  ctx.fill();
+  ctx.closePath();
 }
 function drawPaddleRight() {
-	ctx.beginPath();
-	ctx.fillRect(paddleRightX, paddleRightY, paddleRightWidth, paddleRightHeight);
-	ctx.fillStyle = "rebeccapurple";
-	ctx.fill();
-	ctx.closePath();
+  ctx.beginPath();
+  ctx.fillRect(paddleRightX, paddleRightY, paddleRightWidth, paddleRightHeight);
+  ctx.fillStyle = "rebeccapurple";
+  ctx.fill();
+  ctx.closePath();
 }
 
 function update() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	makeBall();
-	drawPaddleLeft();
-	drawPaddleRight();
-	// keySelector();
-	voiceSelector();
-	makeScoreLeft();
-	makeScoreRight();
-	if (y + movY < ballRadius || y + movY > canvas.height - ballRadius) {
-		//y =Math.floor(Math.random()*(canvas.height-200));
-		movY = -movY;
-	}
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  makeBall();
+  drawPaddleLeft();
+  drawPaddleRight();
+  // keySelector();
+  voiceSelector();
+  makeScoreLeft();
+  makeScoreRight();
+  if (y + movY < ballRadius || y + movY > canvas.height - ballRadius) {
+    //y =Math.floor(Math.random()*(canvas.height-200));
+    movY = -movY;
+  }
 
-	if (x + movX < ballRadius) {
-		if (
-			y > paddleLeftY + ballRadius &&
-			y < paddleLeftY + (paddleLeftHeight + ballRadius)
-		) {
-			movX = -movX;
-		} else {
-			// alert("GAME OVER");
-			//document.location.reload();
-			x = Math.round(Math.random() * (canvas.width / 2));
-			movX = -movX;
-			scoreRight++;
-			if (scoreRight >= 5) {
-				alert("Player-B Win!");
-				resrt();
-			}
-		}
-	} else if (x + movX > canvas.width - ballRadius) {
-		if (
-			y > paddleRightY + ballRadius &&
-			y < paddleRightY + (paddleRightHeight + ballRadius)
-		) {
-			movX = -movX;
-		} else {
-			//alert("GAME OVER");
-			//document.location.reload();
-			x = Math.round(Math.random() * (canvas.width / 2));
-			movX = -movX;
-			scoreLeft++;
-			if (scoreLeft >= 5) {
-				alert("Player-A Win!");
-				resrt();
-			}
-		}
-	}
-	x += movX;
-	y += movY;
+  if (x + movX < ballRadius) {
+    if (
+      y > paddleLeftY + ballRadius &&
+      y < paddleLeftY + (paddleLeftHeight + ballRadius)
+    ) {
+      movX = -movX;
+    } else {
+      // alert("GAME OVER");
+      //document.location.reload();
+      x = Math.round(Math.random() * (canvas.width / 2));
+      movX = -movX;
+      scoreRight++;
+      if (scoreRight >= 5) {
+        alert("Player-B Win!");
+        resrt();
+      }
+    }
+  } else if (x + movX > canvas.width - ballRadius) {
+    if (
+      y > paddleRightY + ballRadius &&
+      y < paddleRightY + (paddleRightHeight + ballRadius)
+    ) {
+      movX = -movX;
+    } else {
+      //alert("GAME OVER");
+      //document.location.reload();
+      x = Math.round(Math.random() * (canvas.width / 2));
+      movX = -movX;
+      scoreLeft++;
+      if (scoreLeft >= 5) {
+        alert("Player-A Win!");
+        resrt();
+      }
+    }
+  }
+  x += movX;
+  y += movY;
 }
 setInterval(update, 10);
 var keys = [];
 document.body.addEventListener("keydown", function(e) {
-	keys[e.keyCode] = true;
+  keys[e.keyCode] = true;
 });
 document.body.addEventListener("keyup", function(e) {
-	keys[e.keyCode] = false;
+  keys[e.keyCode] = false;
 });
 
-var prevDelta = 0
-check = 1
+var prevDelta = 0;
+check = 1;
 function voiceSelector() {
-	let vol = mic.getLevel();
-	let delta = (vol - baseVol) * 100;
-	
-	
-	console.log(delta)
-	if (delta >= 2) {
-		console.log("DOWN")
-		paddleLeftY += 5;
-	}
-	else if (delta < 1.5) {
-		console.log("UP")
-		paddleLeftY -= 5;
-	}
+  let vol = mic.getLevel();
+  let delta = (vol - baseVol) * 100;
 
+  console.log(delta);
+  if (delta >= 2) {
+    console.log("DOWN");
+    paddleLeftY += 5;
+  } else if (delta < 1.5) {
+    console.log("UP");
+    paddleLeftY -= 5;
+  }
 
-	
-	if (paddleLeftY < 0) {
-		paddleLeftY = 0;
-	}
-	if (paddleLeftY > canvas.height - paddleLeftHeight) {
-		paddleLeftY = canvas.height - paddleLeftHeight;
-	}
-	if (paddleRightY < 0) {
-		paddleRightY = 0;
-	}
-	if (paddleRightY > canvas.height - paddleRightHeight) {
-		paddleRightY = canvas.height - paddleRightHeight;
-	}
+  if (paddleLeftY < 0) {
+    paddleLeftY = 0;
+  }
+  if (paddleLeftY > canvas.height - paddleLeftHeight) {
+    paddleLeftY = canvas.height - paddleLeftHeight;
+  }
+  if (paddleRightY < 0) {
+    paddleRightY = 0;
+  }
+  if (paddleRightY > canvas.height - paddleRightHeight) {
+    paddleRightY = canvas.height - paddleRightHeight;
+  }
 }
 
 function voiceDeltaDelta() {
-	if(check === 1) {
-		let vol = mic.getLevel();
-		let delta = (vol - baseVol) * 100;
-		let deltaDelta = delta - prevDelta;
-		
-		
-		console.log(deltaDelta)
-		if (deltaDelta >= 0.00) {
-			console.log("DOWN")
-			paddleLeftY += 10;
-		}
-		else if (deltaDelta < -0.0001) {
-			console.log("UP")
-			paddleLeftY -= 10;
-		}
+  if (check === 1) {
+    let vol = mic.getLevel();
+    let delta = (vol - baseVol) * 100;
+    let deltaDelta = delta - prevDelta;
 
+    console.log(deltaDelta);
+    if (deltaDelta >= 0.0) {
+      console.log("DOWN");
+      paddleLeftY += 10;
+    } else if (deltaDelta < -0.0001) {
+      console.log("UP");
+      paddleLeftY -= 10;
+    }
 
-		baseVol = vol;
-		prevDelta = deltaDelta;
-		check === 0;
-	}
-	else {
-		check = 1;
-	}
+    baseVol = vol;
+    prevDelta = deltaDelta;
+    check === 0;
+  } else {
+    check = 1;
+  }
 
-
-	
-	if (paddleLeftY < 0) {
-		paddleLeftY = 0;
-	}
-	if (paddleLeftY > canvas.height - paddleLeftHeight) {
-		paddleLeftY = canvas.height - paddleLeftHeight;
-	}
-	if (paddleRightY < 0) {
-		paddleRightY = 0;
-	}
-	if (paddleRightY > canvas.height - paddleRightHeight) {
-		paddleRightY = canvas.height - paddleRightHeight;
-	}
+  if (paddleLeftY < 0) {
+    paddleLeftY = 0;
+  }
+  if (paddleLeftY > canvas.height - paddleLeftHeight) {
+    paddleLeftY = canvas.height - paddleLeftHeight;
+  }
+  if (paddleRightY < 0) {
+    paddleRightY = 0;
+  }
+  if (paddleRightY > canvas.height - paddleRightHeight) {
+    paddleRightY = canvas.height - paddleRightHeight;
+  }
 }
 
 function keySelector() {
-	if (keys[38]) {
-		//up for rightpaddle
-		paddleRightY -= 5;
-	}
-	if (keys[40]) {
-		//down for rightpaddle
-		paddleRightY += 5;
-	}
+  if (keys[38]) {
+    //up for rightpaddle
+    paddleRightY -= 5;
+  }
+  if (keys[40]) {
+    //down for rightpaddle
+    paddleRightY += 5;
+  }
 
-	if (keys[87]) {
-		//up for Leftpaddle
-		paddleLeftY -= 5;
-	}
-	if (keys[83]) {
-		//down for Lefttpaddle
-		paddleLeftY += 5;
-	}
-	if (paddleLeftY < 0) {
-		paddleLeftY = 0;
-	}
-	if (paddleLeftY > canvas.height - paddleLeftHeight) {
-		paddleLeftY = canvas.height - paddleLeftHeight;
-	}
-	if (paddleRightY < 0) {
-		paddleRightY = 0;
-	}
-	if (paddleRightY > canvas.height - paddleRightHeight) {
-		paddleRightY = canvas.height - paddleRightHeight;
-	}
+  if (keys[87]) {
+    //up for Leftpaddle
+    paddleLeftY -= 5;
+  }
+  if (keys[83]) {
+    //down for Lefttpaddle
+    paddleLeftY += 5;
+  }
+  if (paddleLeftY < 0) {
+    paddleLeftY = 0;
+  }
+  if (paddleLeftY > canvas.height - paddleLeftHeight) {
+    paddleLeftY = canvas.height - paddleLeftHeight;
+  }
+  if (paddleRightY < 0) {
+    paddleRightY = 0;
+  }
+  if (paddleRightY > canvas.height - paddleRightHeight) {
+    paddleRightY = canvas.height - paddleRightHeight;
+  }
 }
 
 function resrt() {
-	scoreRight = 0;
-	scoreLeft = 0;
+  scoreRight = 0;
+  scoreLeft = 0;
 }
