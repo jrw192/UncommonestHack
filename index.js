@@ -20,7 +20,8 @@ var paddleRightHeight = 100;
 var paddleRightY = canvas.height - (paddleRightHeight + 180);
 var paddleRightX = canvas.width - paddleRightWidth - 10;
 
-
+mic = new p5.AudioIn();
+mic.start();
 
 function makeBall() {
   ctx.beginPath();
@@ -66,7 +67,8 @@ function update() {
   makeBall();
   drawPaddleLeft();
   drawPaddleRight();
-  keySelector();
+  // keySelector();
+  voiceSelector();
   makeScoreLeft();
   makeScoreRight();
   if (y + movY < ballRadius || y + movY > canvas.height - ballRadius) {
@@ -120,6 +122,18 @@ document.body.addEventListener("keydown", function(e) {
 document.body.addEventListener("keyup", function(e) {
   keys[e.keyCode] = false;
 });
+
+function voiceSelector() {
+  var vol = mic.getLevel();
+
+  if (vol > 0.1) {
+    paddleLeftY += 5;
+  }
+  if (vol < 0) {
+    paddleLeftY -= 5;
+  }
+}
+
 function keySelector() {
   if (keys[38]) {
     //up for rightpaddle
