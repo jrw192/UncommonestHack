@@ -126,11 +126,37 @@ document.body.addEventListener("keyup", function(e) {
 function voiceSelector() {
   var vol = mic.getLevel();
 
-  if (vol > 0.1) {
+  if (vol >= 0.005) {
     paddleLeftY += 5;
   }
+  if (vol < 0.005) {
+    paddleLeftY -= 5;
+  }
+
   if (vol < 0) {
     paddleLeftY -= 5;
+  }
+
+  if (keys[38]) {
+    //up for rightpaddle
+    paddleRightY -= 5;
+  }
+  if (keys[40]) {
+    //down for rightpaddle
+    paddleRightY += 5;
+  }
+
+  if (paddleLeftY < 0) {
+    paddleLeftY = 0;
+  }
+  if (paddleLeftY > canvas.height - paddleLeftHeight) {
+    paddleLeftY = canvas.height - paddleLeftHeight;
+  }
+  if (paddleRightY < 0) {
+    paddleRightY = 0;
+  }
+  if (paddleRightY > canvas.height - paddleRightHeight) {
+    paddleRightY = canvas.height - paddleRightHeight;
   }
 }
 
