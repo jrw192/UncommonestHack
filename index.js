@@ -1,5 +1,7 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+ctx.canvas.width = window.innerWidth;
+ctx.canvas.height = window.innerHeight;
 var width = canvas.width; // canvas width
 var height = canvas.height;
 var x = Math.floor(Math.random() * (canvas.width / 2));
@@ -12,11 +14,14 @@ var ballRadius = 10;
 var paddleLeftWidth = 10;
 var paddleLeftHeight = 100;
 var paddleLeftY = canvas.height - (paddleLeftHeight + 180);
-var paddleLeftX = canvas.width - (paddleLeftWidth + 790);
+var paddleLeftX = paddleLeftWidth;
 var paddleRightWidth = 10;
 var paddleRightHeight = 100;
 var paddleRightY = canvas.height - (paddleRightHeight + 180);
-var paddleRightX = canvas.width - paddleRightWidth;
+var paddleRightX = canvas.width - paddleRightWidth - 10;
+
+
+
 function makeBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, 2 * Math.PI);
@@ -37,7 +42,7 @@ function makeScoreRight() {
   ctx.beginPath();
   ctx.fillStyle = "rebeccapurple";
   ctx.font = "20px Arial";
-  ctx.fillText("Player - B :" + " " + scoreRight, 675, 30);
+  ctx.fillText("Player - B :" + " " + scoreRight, window.innerWidth - 150, 30);
   ctx.fill();
   ctx.closePath();
 }

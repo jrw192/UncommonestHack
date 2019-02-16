@@ -1,36 +1,7 @@
 canvas {
   background-color: #b1dec8;
-  margin-left: 280px;
-  margin-top: -22px;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
-.main {
-  background-color: #b1dec8;
-  margin-left: 280px;
-  width: 800px;
-}
-.hed {
-  border-bottom: 3px solid;
-  color: rebeccapurple;
-  padding-bottom: 3px;
-  padding-top: 3px;
-  text-align: center;
-}
-.main1 {
-  background-color: #b1dec8;
-  margin-left: 280px;
-  width: 800px;
-  margin-top: -20px;
-}
-.hed1 {
-  color: rebeccapurple;
-  padding-bottom: 3px;
-  padding-top: 3px;
-  text-align: center;
-}
-h3 {
-  color: rebeccapurple;
-  margin-top: -19px;
-  padding-bottom: 9px;
-  text-align: center;
-}
