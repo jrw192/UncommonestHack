@@ -35,7 +35,6 @@ function makeBall(volume) {
   ctx.arc(x, y, ballRadius, 0, 2 * Math.PI);
   if (volume > 2) {
     ctx.fillStyle = "#b1dec8";
-    // ctx.fillStyle = "rgba(255, 255, 255, 0.0)";
   } else {
     ctx.fillStyle = "rebeccapurple";
   }
@@ -151,24 +150,40 @@ function voiceSelector() {
     paddleLeftY -= 5;
   }
 
-  if (keys[38]) {
-    //up for rightpaddle
+  // Right AI movement
+  // if (paddleRightY > y) {
+  //   paddleRightY -= 3;
+  // }
+
+  if (paddleRightY > y - paddleRightHeight / 2) {
     paddleRightY -= 5;
   }
-  if (keys[40]) {
-    //down for rightpaddle
+  if (paddleRightY < y - paddleRightHeight / 2) {
     paddleRightY += 5;
   }
 
+  // if (keys[38]) {
+  //   //up for rightpaddle
+  //   paddleRightY -= 5;
+  // }
+  // if (keys[40]) {
+  //   //down for rightpaddle
+  //   paddleRightY += 5;
+  // }
+
+  // Collision Detection
   if (paddleLeftY < 0) {
     paddleLeftY = 0;
   }
-  if (paddleLeftY > canvas.height - paddleLeftHeight) {
-    paddleLeftY = canvas.height - paddleLeftHeight;
-  }
+
   if (paddleRightY < 0) {
     paddleRightY = 0;
   }
+
+  if (paddleLeftY > canvas.height - paddleLeftHeight) {
+    paddleLeftY = canvas.height - paddleLeftHeight;
+  }
+
   if (paddleRightY > canvas.height - paddleRightHeight) {
     paddleRightY = canvas.height - paddleRightHeight;
   }
