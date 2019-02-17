@@ -30,14 +30,10 @@ function initVol() {
 }
 initVol();
 
-function makeBall(volume) {
+function makeBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, 2 * Math.PI);
-  if (volume > 2) {
-    ctx.fillStyle = "#b1dec8";
-  } else {
-    ctx.fillStyle = "rebeccapurple";
-  }
+
   ctx.fill();
   ctx.closePath();
 }
@@ -139,7 +135,7 @@ check = 1;
 function voiceSelector() {
   let vol = mic.getLevel();
   let delta = (vol - baseVol) * 100;
-  makeBall(delta);
+  makeBall();
 
   console.log(delta);
   if (delta >= 2) {
